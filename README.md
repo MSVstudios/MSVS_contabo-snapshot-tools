@@ -19,7 +19,7 @@ This script allows you to manage snapshots for your Contabo Virtual Private Serv
 
 3. **Run the Script:** Open a terminal, navigate to the directory containing the script, and run the script using the following command:
    ```
-   python script_name.py [options]
+   python make-snap-shot.py [options]
    ```
 
 4. **Options:**
@@ -35,27 +35,27 @@ This script allows you to manage snapshots for your Contabo Virtual Private Serv
 
 - To list all instances and their snapshots:
   ```
-  python script_name.py
+  python make-snap-shot.py
   ```
 
 - To delete the oldest snapshot for a specific instance without asking for confirmation:
   ```
-  python script_name.py --instanceid 12345 --oldest
+  python make-snap-shot.py --instanceid 12345 --oldest
   ```
 
 - To recreate an existing snapshot for a specific instance:
   ```
-  python script_name.py --instanceid 12345 --snapshotid snap123456 --force
+  python make-snap-shot.py --instanceid 12345 --snapshotid snap123456 --force
   ```
 
 - To delete and recreate an expired snapshot for a specific instance:
   ```
-  python script_name.py --instanceid 12345 --expired 7
+  python make-snap-shot.py --instanceid 12345 --expired 7
   ```
 
 - To delete the oldest snapshot for all instances and create new snapshots:
   ```
-  python script_name.py --all
+  python make-snap-shot.py --all
   ```
 
 This script provides a flexible way to manage snapshots for your Contabo VPS instances, allowing you to automate the process of creating, deleting, and managing snapshots based on your requirements. It's a powerful tool for ensuring the safety and integrity of your VPS data.
