@@ -16,6 +16,11 @@ This script allows you to manage snapshots for your Contabo Virtual Private Serv
    API_USER=your_api_user
    API_PASSWORD=your_api_password
    ```
+   don't forget
+   ```
+   chmod 400 .env
+   ```
+   
 
 3. **Run the Script:** Open a terminal, navigate to the directory containing the script, and run the script using the following command:
    ```
