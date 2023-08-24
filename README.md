@@ -62,6 +62,7 @@ This script allows you to manage snapshots for your Contabo Virtual Private Serv
   ```
   python make-snap-shot.py --all
   ```
+
 5. **Build and Run the Docker Container:**  
 
 Open a terminal and navigate to the directory containing your project files. Run the following commands to build and run the Docker container:
