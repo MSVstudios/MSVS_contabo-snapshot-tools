@@ -160,6 +160,7 @@ def delete_snapshot(access_token, instance_id, snapshot_id):
     snapshot_url = f"https://api.contabo.com/v1/compute/instances/{instance_id}/snapshots/{snapshot_id}"
     request_id = uuid.uuid4()
     headers = {
+        # if uncoment the next line you will get an error: BAD request
         # "Content-Type": "application/json",
         "Authorization": f"Bearer {access_token}",
         "x-request-id": f"{request_id}",
@@ -241,7 +242,7 @@ if __name__ == "__main__":
     parser.add_argument("--expired","-e", type=int, help="Delete and recreate snapshot if older than specified days")
     parser.add_argument("--instanceid","-ii", type=int, help="provide instance id")
     parser.add_argument("--snapshotid", "-is", type=str, help="provide snapshot id")
-    parser.add_argument("--oldest","-o", type=str, help="is set you will delete the oldest snapshot without asking or passing --snapshotid, is overriden by --snapshotid")
+    parser.add_argument("--oldest","-o", action="store_true", help="is set you will delete the oldest snapshot without asking or passing --snapshotid, is overriden by --snapshotid")
     parser.add_argument("--verbose","-v", action="store_true", help="Print verbose output")
     parser.add_argument("--all","-a", action="store_true", help="delete the oldest snapshot for all instances and make a new one")
     args = parser.parse_args()
