@@ -1,4 +1,4 @@
-**Contabo VPS Snapshot Management Script**
+**Contabo VPS Snapshot Management tool Script**
 
 This script allows you to manage snapshots for your Contabo Virtual Private Servers (VPS) using the Contabo API. Snapshots are a way to capture a snapshot of your VPS at a particular point in time, which can be useful for creating backups, testing, or rolling back changes. This script provides various options to list, create, and manage snapshots.
 
