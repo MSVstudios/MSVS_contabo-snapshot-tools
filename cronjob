@@ -1,0 +1,2 @@
+# Run the script every day at midnight
+0 0 * * * /usr/bin/python3 /app/make-snap-shot.py
