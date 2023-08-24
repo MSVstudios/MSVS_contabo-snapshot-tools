@@ -66,12 +66,12 @@ This script allows you to manage snapshots for your Contabo Virtual Private Serv
 
 Open a terminal and navigate to the directory containing your project files. Run the following commands to build and run the Docker container:
 
-# Build the Docker image
+**Build the Docker image**
 ```
 docker build -t contabo-snapshot-tools .
 ```
 
-# Run the Docker container
+**Run the Docker container**
 ```
 docker run -d --name contabo-snapshot-container contabo-snapshot-tools
 ```
