@@ -21,6 +21,7 @@ COPY cronjob /etc/crontabs/root
 # Make the script executable
 RUN chmod +x make-snap-shot.py
 RUN chmod +x contabo-snapshot.sh
+RUN chmod 400 .env
 
 # Start cron daemon
 CMD crond -f

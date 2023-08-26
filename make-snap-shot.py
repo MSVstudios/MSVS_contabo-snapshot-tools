@@ -309,7 +309,7 @@ if __name__ == "__main__":
                             print(f"Snapshot with instance ID {args.snapshotid} not found.")
                             exit()
                     # if not set select a snapshot mauanlly
-                    if not select_snapshot: 
+                    if 'selected_snapshot' not in locals(): 
                             selected_snapshot = select_snapshot(snapshots)
                             existing_snapshot = True
                     if selected_snapshot:

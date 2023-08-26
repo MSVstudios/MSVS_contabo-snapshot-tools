@@ -1,2 +1,2 @@
 #!/bin/bash
-/path/to/python3 /path/to/your_script.py --all
+python3 "$PWD"/make-snap-shot.py --all
