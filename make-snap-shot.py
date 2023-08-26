@@ -1,5 +1,6 @@
 # by MSV studios - for contabo api https://api.contabo.com/
-# version 20230824
+# https://github.com/MSVstudios/contabo-snapshot-tools
+# version 20230825
 
 import requests
 import json
