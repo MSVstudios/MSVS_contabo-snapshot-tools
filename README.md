@@ -76,5 +76,6 @@ This script allows you to manage snapshots for your Contabo Virtual Private Serv
    ```
    docker run -d --name contabo-snapshot-container contabo-snapshot-tools
    ```
+   remember to modify cronjob file and contabo-snapshot.sh with your specific needs
 
-   This script provides a flexible way to manage snapshots for your Contabo VPS instances, allowing you to automate the process of creating, deleting, and managing snapshots based on your requirements. It's a powerful tool for ensuring the safety and integrity of your VPS data.
+This script provides a flexible way to manage snapshots for your Contabo VPS instances, allowing you to automate the process of creating, deleting, and managing snapshots based on your requirements. It's a powerful tool for ensuring the safety and integrity of your VPS data.

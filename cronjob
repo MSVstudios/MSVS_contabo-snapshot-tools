@@ -1,2 +1,3 @@
 # Run the script every day at midnight
-0 0 * * * /usr/bin/python3 /app/make-snap-shot.py
+25 7 * * * /app/contabo-snapshot.sh >> /var/log/contabo-snapshot.log 2>&1
+

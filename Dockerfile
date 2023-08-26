@@ -10,6 +10,7 @@ WORKDIR /app
 # Copy the script and .env file
 COPY make-snap-shot.py .
 COPY .env .
+COPY contabo-snapshot.sh .
 
 # Install required Python packages
 RUN pip3 install requests python-dotenv
@@ -19,6 +20,7 @@ COPY cronjob /etc/crontabs/root
 
 # Make the script executable
 RUN chmod +x make-snap-shot.py
+RUN chmod +x contabo-snapshot.sh
 
 # Start cron daemon
 CMD crond -f
