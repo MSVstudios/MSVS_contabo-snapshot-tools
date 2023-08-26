@@ -166,8 +166,6 @@ def delete_snapshot(access_token, instance_id, snapshot_id):
         "x-request-id": f"{request_id}",
         "x-trace-id": f"{TRACE_ID}"
     }
-    print(snapshot_url)
-    print(headers)
     try:
         response = requests.delete(snapshot_url, headers=headers)
         response.raise_for_status()  # Raise an exception for non-2xx responses
@@ -242,7 +240,7 @@ if __name__ == "__main__":
     parser.add_argument("--expired","-e", type=int, help="Delete and recreate snapshot if older than specified days")
     parser.add_argument("--instanceid","-ii", type=int, help="provide instance id")
     parser.add_argument("--snapshotid", "-is", type=str, help="provide snapshot id")
-    parser.add_argument("--oldest","-o", action="store_true", help="is set you will delete the oldest snapshot without asking or passing --snapshotid, is overriden by --snapshotid")
+    parser.add_argument("--oldest","-o", action="store_true", help="if is set he will delete the oldest snapshot in the specified instance without asking or specifying --snapshotid, (is overriden by --snapshotid). Don't need --force to forcibly delete the oldest snapshot." )
     parser.add_argument("--verbose","-v", action="store_true", help="Print verbose output")
     parser.add_argument("--all","-a", action="store_true", help="delete the oldest snapshot for all instances and make a new one")
     args = parser.parse_args()
@@ -277,26 +275,42 @@ if __name__ == "__main__":
                 print(f"Instance Name: {selected_instance['name']}")
                 print(f"Instance Display Name: {selected_instance['displayName']}")
                 print(f"Instance ID: {selected_instance['instanceId']}")
+
                 # list snapshots
                 snapshots=list_snapshots(access_token,selected_instance['instanceId'])
-                
+
+                # if snapshot list exist check
+                new_snapshot = False 
                 if snapshots:
+                    print("snapshot(s) list exist")   
                     existing_snapshot = False
+                    # check if the args.oldest and snapshotid are set
+                    # if args.snapshotid is set then  args.oldest is everriden
+                    if args.oldest and not args.snapshotid:
+                        # Use the first snapshot in the list as the oldest snapshot
+                        selected_snapshot = snapshots[0]
+                        existing_snapshot = True
+                        # set args.force to true
+                        args.force = True
+                        print("The oldest snapshot is:")
+                        print(f"Snapshot Name: {selected_snapshot['name']}")
+                        print(f"Snapshot snapshotId: {selected_snapshot['snapshotId']}")
+                    # if args.snapshotid is set then check if the snapshot exist in the list
                     if args.snapshotid:
-                        #check if there the snapshot exist in the list
-                        found_snapshot = None
+                        found_snapshot = False
                         for snapshot in snapshots:
                             if snapshot["snapshotId"] == args.snapshotid:
-                                found_snapshot = snapshot
+                                found_snapshot = True
                                 existing_snapshot = True
+                                selected_snapshot = snapshot
                                 break
                         if not found_snapshot:
-                            print(f"Snasdhot with instance ID {args.snapshotid} not found.")
+                            print(f"Snapshot with instance ID {args.snapshotid} not found.")
                             exit()
-                        selected_snapshot = found_snapshot
-                    else:
-                        selected_snapshot = select_snapshot(snapshots)
-                        existing_snapshot = True
+                    # if not set select a snapshot mauanlly
+                    if not select_snapshot: 
+                            selected_snapshot = select_snapshot(snapshots)
+                            existing_snapshot = True
                     if selected_snapshot:
                         print("You selected:")
                         print(f"Snapshot Name: {selected_snapshot['name']}")
@@ -311,6 +325,7 @@ if __name__ == "__main__":
                                     print("you used --force to delete existing snapshot.")
                                     print(f"now deleting snapshot {selected_snapshot['name']}")
                                     delete_snapshot(access_token, selected_instance['instanceId'], selected_snapshot['snapshotId'])
+                                    new_snapshot = True 
                                 elif args.expired:
                                     # check if the selected snapshot is expired
                                     created_date = datetime.datetime.strptime(selected_snapshot['createdDate'], "%Y-%m-%dT%H:%M:%S.%fZ")
@@ -323,22 +338,34 @@ if __name__ == "__main__":
                                         print(f"now deleting snapshot {selected_snapshot['name']}")
                                         print()
                                         delete_snapshot(access_token, selected_instance['instanceId'], selected_snapshot['snapshotId'])
+                                        new_snapshot = True 
                                     else:
                                         print(f"Snapshot {selected_snapshot['name']} is not expired.")
                                         print("Exiting.")
                                         exit()  
+                        else:
+                            print("selected snapshot don't exists! Exiting")  
+                            exit()                
                     else:
-                        print("No snapshot selected. Exiting.")
-                        # or just create a new one                    
-                        exit()    
+                        print("No snapshot selected. something whent wrong! Exiting.")  
+                        exit             
+                # else create a new one
+                else:
+                    print("no snapshots exist for this instance") 
+                    new_snapshot = True       
                 # create a new snapshot
-                #snapshot_name = input("Enter a name for the snapshot: ")
-                snapshot_name = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-                #snapshot_description = input("Enter a description for the new snapshot: ")
-                snapshot_description = "snapshot created by make-snap-shot.py script - github.com/msvs/msvs-contabo-snapshot"
-                create_snapshot(access_token, selected_instance['instanceId'], snapshot_name, snapshot_description)
-                # --------------------
-                print("all done!!!")
+                if new_snapshot: 
+                    print("creating a new snapshot ####")    
+                    #snapshot_name = input("Enter a name for the snapshot: ")
+                    snapshot_name = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+                    #snapshot_description = input("Enter a description for the new snapshot: ")
+                    snapshot_description = "snapshot created by make-snap-shot.py script - github.com/msvs/msvs-contabo-snapshot"
+                    create_snapshot(access_token, selected_instance['instanceId'], snapshot_name, snapshot_description)
+                    # --------------------
+                    print("all done!!!")          
+                else:
+                    print("No snapshot selected. Exiting.")  
+                    exit()       
             # --------------------
             else:
                 print("No instance selected. Exiting.")
