@@ -33,7 +33,7 @@ This script allows you to manage snapshots for your Contabo Virtual Private Serv
    - `--snapshotid` or `-is`: Specify the snapshot ID to directly target a specific snapshot.
    - `--force` or `-f`: Force deletion of an existing snapshot before creating a new one.
    - `--expired` or `-e`: Delete and recreate a snapshot if it's older than the specified number of days.
-   - `--oldest` or `-o`: Delete the oldest snapshot for the specified instance without asking for confirmation.
+   - `--oldest` or `-o`:  Delete the oldest snapshot for the specified instance without asking or specifying --snapshotid. This flag is overridden by --snapshot. Don't need --force to forcibly delete the oldest snapshot.
    - `--verbose` or `-v`: Print verbose output for debugging.
    
 **Examples:**
