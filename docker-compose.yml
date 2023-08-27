@@ -1,0 +1,11 @@
+version: '3'
+services:
+  contabo-snapshot-container:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: contabo-snapshot-tools
+    container_name: contabo-snapshot-container
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro

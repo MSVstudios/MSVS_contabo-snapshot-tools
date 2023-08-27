@@ -78,4 +78,18 @@ This script allows you to manage snapshots for your Contabo Virtual Private Serv
    ```
    remember to modify cronjob file and contabo-snapshot.sh with your specific needs
 
+   Save this as docker-compose.yml in the same directory as your Dockerfile and other necessary files. Then, you can use the following commands:
+
+    Build the image:
+    ```
+    docker-compose build
+    ```
+
+    Run the container:
+    ```
+    docker-compose up -d
+    ```
+    
+    This will create and run a container named contabo-snapshot-container using the image you built. The time zone of the container will be the same as the host's time zone due to the mounted volume.
+
 This script provides a flexible way to manage snapshots for your Contabo VPS instances, allowing you to automate the process of creating, deleting, and managing snapshots based on your requirements. It's a powerful tool for ensuring the safety and integrity of your VPS data.

@@ -1,2 +1,2 @@
-#!/bin/bash
-python3 "$PWD"/make-snap-shot.py --all
+#!/bin/sh
+python3 /app/make-snap-shot.py --all --expired 10 

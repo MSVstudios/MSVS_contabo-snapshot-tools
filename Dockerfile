@@ -9,8 +9,11 @@ WORKDIR /app
 
 # Copy the script and .env file
 COPY make-snap-shot.py .
-COPY .env .
 COPY contabo-snapshot.sh .
+
+# Copy the .env file
+# COPY .env .
+COPY .env .env.template /app/
 
 # Install required Python packages
 RUN pip3 install requests python-dotenv
